@@ -1,81 +1,32 @@
-<a id="temat-0"></a>
+# LaTeX — polecenia i przykłady
 
-# LaTeX na kolokwium - Poradnik praktyczny
+TeXstudio + MiKTeX · LuaLaTeX
 
-TeXstudio + MiKTeX • szablon SZABLON-Projektu • LuaLaTeX
+Praktyczne polecenia: zastosowanie, miejsce użycia i kod dla szablonu SZABLON-Projektu.
 
-## Spis tematów
+## Spis treści
 
-- [1. Uruchomienie w TeXstudio](#temat-1)
-- [2. Gdzie zmieniać szablon](#temat-2)
-- [3. Pakiety i ścieżki](#temat-3)
-- [4. Tekst i nagłówki](#temat-4)
-- [5. Listy i układ tekstu](#temat-5)
-- [6. Matematyka: podstawy](#temat-6)
-- [7. Matematyka: gotowe wzorce](#temat-7)
-- [8. Tabela: podstawowy wzorzec](#temat-8)
-- [9. Tabele: scalanie i długi tekst](#temat-9)
-- [10. Rysunek z pliku i odwołania](#temat-10)
-- [11. Kod Python i C](#temat-11)
-- [12. TikZ: figury i połączenia](#temat-12)
-- [13. TikZ: schemat sortowania](#temat-13)
-- [14. PGFPlots: wykres funkcji](#temat-14)
-- [15. PGFPlots: dwie serie z CSV](#temat-15)
-- [16. Wykresy: szybkie modyfikacje](#temat-16)
-- [17. Bibliografia i składanie plików](#temat-17)
-- [18. Błędy: objaw i naprawa](#temat-18)
-- [19. Próbne kolokwium: 45 minut](#temat-19)
-- [20. Dodatki i źródła zakresu](#temat-20)
-
-Materiał do nauki na podstawie przesłanych laboratoriów 2-7, wykładów, skryptów i rzeczywistego szablonu. Zamiast teorii: co wpisać, do którego pliku, co zmienić i jak sprawdzić wynik.
-
-### Jak korzystać
-
-Fragmenty opisane jako „treść rozdziału” wklejaj do odpowiedniego chapters/\*.tex, wewnątrz dokumentu. Nie dodawaj tam drugiego \\documentclass ani \\begin\{document\}. Dodatki do preambuły wpisuj w main.tex po \\usepackage\{config/project-style\}, przed \\begin\{document\}.
-
-Kod w przykładach jest materiałem ćwiczeniowym. Zakres konkretnego kolokwium określa prowadzący; poradnik obejmuje operacje z dostarczonych materiałów, a nie wszystkie istniejące pakiety LaTeX-a.
-
-<a id="temat-1"></a>
-
-## 1. Uruchomienie w TeXstudio
-
-### Pierwsza kompilacja
-
-1. Rozpakuj cały ZIP do zwykłego folderu, np. Dokumenty/latex-kolokwium. Nie pracuj wewnątrz archiwum. Zachowaj config/, chapters/, backmatter/, assets/ i literatura.bib.
-
-2. Otwórz main.tex w TeXstudio. Ustaw go jako dokument główny/root w menu Opcje, jeśli kompilacja uruchamia sam rozdział. Nazwy pozycji menu mogą zależeć od języka i wersji edytora.
-
-3. Opcje → Konfiguruj TeXstudio → Budowanie: domyślny kompilator LuaLaTeX, narzędzie bibliografii Biber. W Poleceniach sprawdź, czy LuaLaTeX wywołuje lualatex, a Biber wywołuje biber.
-
-4. Zapisz wszystkie zmienione pliki. Wybierz LuaLaTeX i uruchom kompilację, następnie podgląd PDF. Skróty sprawdzisz w menu Narzędzia; mogą być zmienione przez konfigurację.
-
-```latex
-% main.tex ma już te wskazówki dla edytora:
-% !TeX program = lualatex
-% !TeX root = main.tex
-% !TeX TXS-program:bibliography = txs:///biber
-```
-
-### Gdy edytujesz plik rozdziału
-
-```latex
-% Opcjonalnie pierwsza linia chapters/04-realizacja.tex:
-% !TeX root = ../main.tex
-```
-
-Root jest wskazówką dla edytora. Przy uruchamianiu LuaLaTeX kompilujesz main.tex; sam plik rozdziału nie zawiera pełnego dokumentu.
-
-### Ile razy kompilować?
-
-Zwykła zmiana tekstu: LuaLaTeX. Nowa etykieta, spis treści lub zmiana numeracji: LuaLaTeX jeszcze raz, aż znikną ostrzeżenia o odwołaniach. Bibliografia: LuaLaTeX → Biber → LuaLaTeX → LuaLaTeX. Biber uruchamiaj dla main, nie dla pliku .bib.
-
-### MiKTeX: brak pakietu lub polecenia
-
-Jeśli MiKTeX proponuje instalację brakującego pakietu, pozwól ją wykonać. W MiKTeX Console można ustawić instalowanie brakujących pakietów na żądanie i zaktualizować pakiety. Jeśli lualatex nie jest znajdowany, sprawdź instalację MiKTeX i ścieżkę do programu w TeXstudio; po instalacji uruchom edytor ponownie. Latexmk i Perl nie są potrzebne do ręcznej sekwencji powyżej.
+- [1. Gdzie zmieniać szablon](#temat-2)
+- [2. Pakiety i ścieżki](#temat-3)
+- [3. Tekst i nagłówki](#temat-4)
+- [4. Listy i układ tekstu](#temat-5)
+- [5. Matematyka: podstawy](#temat-6)
+- [6. Matematyka: gotowe wzorce](#temat-7)
+- [7. Tabela: podstawowy wzorzec](#temat-8)
+- [8. Tabele: scalanie i długi tekst](#temat-9)
+- [9. Rysunek z pliku i odwołania](#temat-10)
+- [10. Kod Python i C](#temat-11)
+- [11. TikZ: figury i połączenia](#temat-12)
+- [12. TikZ: schemat sortowania](#temat-13)
+- [13. PGFPlots: wykres funkcji](#temat-14)
+- [14. PGFPlots: dwie serie z CSV](#temat-15)
+- [15. Wykresy: szybkie modyfikacje](#temat-16)
+- [16. Bibliografia i składanie plików](#temat-17)
+- [17. Własne polecenia i Beamer](#temat-20)
 
 <a id="temat-2"></a>
 
-## 2. Gdzie zmieniać szablon
+## 1. Gdzie zmieniać szablon
 
 | Plik | Zastosowanie |
 | --- | --- |
@@ -116,7 +67,7 @@ main.tex już generuje odpowiednie wykazy. Obiekty muszą mieć podpisy, a po zm
 
 <a id="temat-3"></a>
 
-## 3. Pakiety i ścieżki
+## 2. Pakiety i ścieżki
 
 ### Co jest już w przesłanym szablonie
 
@@ -164,7 +115,7 @@ Zmiana nazwy pliku wymaga zmiany odwołania w kodzie. Do kompilacji na innym kom
 
 <a id="temat-4"></a>
 
-## 4. Tekst i nagłówki
+## 3. Tekst i nagłówki
 
 ### Treść rozdziału: struktura jest numerowana automatycznie
 
@@ -207,7 +158,7 @@ Daszek: \textasciicircum{}.
 
 <a id="temat-5"></a>
 
-## 5. Listy i układ tekstu
+## 4. Listy i układ tekstu
 
 ### Punkty, numeracja, opis pojęć
 
@@ -260,7 +211,7 @@ Tylda ~ daje spację nierozdzielającą: rys.~\\ref\{fig:czas\}, w~tabeli, 10~ms
 
 <a id="temat-6"></a>
 
-## 6. Matematyka: podstawy
+## 5. Matematyka: podstawy
 
 ### W zdaniu, osobno, z numerem
 
@@ -297,7 +248,7 @@ Klamry w a\_\{i+1\} grupują cały indeks. Zapis a\_i+1 oznacza coś innego. Fun
 
 <a id="temat-7"></a>
 
-## 7. Matematyka: gotowe wzorce
+## 6. Matematyka: gotowe wzorce
 
 ### Wzory wymagane w laboratorium
 
@@ -356,7 +307,7 @@ Liczba: \num{12345.67}.
 
 <a id="temat-8"></a>
 
-## 8. Tabela: podstawowy wzorzec
+## 7. Tabela: podstawowy wzorzec
 
 Treść rozdziału. table daje podpis i numer obiektu, tabular ustala komórki. Dane są syntetycznymi wartościami dydaktycznymi z załączników.
 
@@ -397,7 +348,7 @@ Przy 5 kolumnach zwykły wiersz ma 4 separatory &. „Extra alignment tab” cz�
 
 <a id="temat-9"></a>
 
-## 9. Tabele: scalanie i długi tekst
+## 8. Tabele: scalanie i długi tekst
 
 ### Dwupoziomowy nagłówek: dodaj pakiet multirow
 
@@ -444,7 +395,7 @@ Najpierw skróć nagłówki, użyj p\{...\}/X, zmniejsz lokalnie czcionkę przez
 
 <a id="temat-10"></a>
 
-## 10. Rysunek z pliku i odwołania
+## 9. Rysunek z pliku i odwołania
 
 ### Kopia załączonego PNG w figures/wykres_sortowania.png
 
@@ -492,7 +443,7 @@ ref daje sam numer; cref dobiera też nazwę rodzaju obiektu. Prefiksy fig:, tab
 
 <a id="temat-11"></a>
 
-## 11. Kod Python i C
+## 10. Kod Python i C
 
 ### Wariant A: kod wpisany do rozdziału
 
@@ -541,7 +492,7 @@ Opcje oddzielaj przecinkami wewnątrz \[...\]. Szablon ma style project-python, 
 
 <a id="temat-12"></a>
 
-## 12. TikZ: figury i połączenia
+## 11. TikZ: figury i połączenia
 
 Preambuła: tikz i biblioteki positioning, shapes.geometric, arrows.meta z części „Pakiety i ścieżki”. Treść rozdziału:
 
@@ -590,7 +541,7 @@ Każde \\node i \\draw kończ średnikiem. Brak średnika często powoduje błą
 
 <a id="temat-13"></a>
 
-## 13. TikZ: schemat sortowania
+## 12. TikZ: schemat sortowania
 
 Pełny wzorzec do ćwiczenia zmian węzłów i strzałek. Przebieg sprawdza wszystkie sąsiednie pary; jeśli wykonano zamianę, algorytm powtarza przebieg.
 
@@ -634,7 +585,7 @@ Rozszerzenie n \< 2: po wczytaniu dodaj romb z tym warunkiem. Gałąź „Tak”
 
 <a id="temat-14"></a>
 
-## 14. PGFPlots: wykres funkcji
+## 13. PGFPlots: wykres funkcji
 
 Preambuła: \\usepackage\{pgfplots\} i \\pgfplotsset\{compat=1.18\}. W treści używasz figure → tikzpicture → axis → addplot.
 
@@ -676,7 +627,7 @@ Kontrola dla tej funkcji: minimum jest w (1, -4), miejsca zerowe w -1 i 3. Jeśl
 
 <a id="temat-15"></a>
 
-## 15. PGFPlots: dwie serie z CSV
+## 14. PGFPlots: dwie serie z CSV
 
 Skopiuj dane\_porownawcze (4).csv do data/dane\_porownawcze.csv. Plik ma przecinki między kolumnami i kropki dziesiętne. Pierwszy wiersz:
 
@@ -721,7 +672,7 @@ Powinno być po 5 punktów każdej serii. Dla n=5000: Bubble 883,7 ms, Insertion
 
 <a id="temat-16"></a>
 
-## 16. Wykresy: szybkie modyfikacje
+## 15. Wykresy: szybkie modyfikacje
 
 ### Drugi CSV ma inne nazwy kolumn: n i t_ms
 
@@ -770,7 +721,7 @@ coordinates przydaje się dla krótkiego przykładu, ale nie zastępuje wymagane
 
 <a id="temat-17"></a>
 
-## 17. Bibliografia i składanie plików
+## 16. Bibliografia i składanie plików
 
 ### Cytowanie: szablon ma biblatex + Biber
 
@@ -817,67 +768,9 @@ To kolejność narzędzi, którą możesz wykonać z menu TeXstudio. Jeśli po c
 
 include rozpoczyna nową stronę i służy zwykle całym rozdziałom. input wstawia zawartość w bieżącym miejscu. Nie dopisuj nowego \\begin\{document\} w żadnym z tych plików. \\appendix w main.tex przełącza numerację kolejnych rozdziałów na litery.
 
-<a id="temat-18"></a>
-
-## 18. Błędy: objaw i naprawa
-
-| Komunikat / objaw | Sprawdź i popraw |
-| --- | --- |
-| Undefined control sequence | Literówka w poleceniu albo brak pakietu. axis → pgfplots; multirow → multirow; node → tikz. |
-| File ... not found | Czy plik rozpakowano, zapisano i czy ścieżka/nazwa są dokładne? Sprawdź też rozszerzenie i katalog główny projektu. |
-| Missing \$ inserted | Najczęściej \_ lub ^ poza matematyką. W tekście plik\\\_dane, we wzorze \$a\_i\$. |
-| Extra alignment tab has been changed to \\cr | Za dużo & w tabeli lub brak końca poprzedniego wiersza. Policz kolumny. |
-| Runaway argument / Missing \} inserted | Brak zamknięcia \} albo zbyt duży fragment objęty argumentem. Sprawdź ostatnio zmienione linie. |
-| Environment ... undefined | Brak pakietu lub literówka w nazwie środowiska. |
-| \\begin\{...\} ended by \\end\{...\} | Nazwy lub kolejność zamykania środowisk nie pasują. |
-| Unknown float option H | Dodaj float w preambule albo zmień \[H\] na \[htbp\]. |
-| Option clash for package ... | Pakiet został dodany ponownie z innymi opcjami. Sprawdź project-style.sty. |
-| Package pgfplots Error: column ... | Niepoprawny nagłówek y/x, separator CSV albo inny plik niż oczekiwany. |
-| TikZ: Giving up on this path | Zwykle brak średnika po \\draw lub \\node; sprawdź też nawiasy. |
-| ?? w odwołaniu | Kompiluj ponownie; porównaj klucze label/ref, sprawdź czy label jest po caption. |
-| Citation ... undefined / prośba o Biber | Sprawdź klucz w .bib i wykonaj LuaLaTeX → Biber → LuaLaTeX × 2. |
-| Overfull \\hbox | Coś wystaje za margines. Skróć tekst, zawijaj kod, dobierz szerokość tabeli lub obrazu. |
-| PDF się nie zmienia | Zapisz pliki, sprawdź root main.tex, wynik kompilacji oraz czy oglądasz właściwy main.pdf. |
-
-### Najkrótsza procedura naprawy
-
-Czytaj pierwszy błąd w logu, nie ostatni z kilkudziesięciu. Sprawdź linię wskazaną oraz kilka linii wcześniej. Popraw jedną przyczynę, kompiluj ponownie. Ostrzeżenie o wypełnieniu linii nie jest tym samym co błąd zatrzymujący kompilację.
-
-<a id="temat-19"></a>
-
-## 19. Próbne kolokwium: 45 minut
-
-Zrób zadania w kopii szablonu. Najpierw spróbuj bez podglądania przykładów, potem popraw brakujące elementy. To autorski trening oparty na przesłanych materiałach, nie przewidywany arkusz zaliczenia.
-
-| Czas | Zadanie i kryterium wyniku |
-| --- | --- |
-| 0-5 min | Otwórz main.tex w TeXstudio, wybierz LuaLaTeX. Zmień tytuł, autora i datę. PDF ma poprawną stronę tytułową. |
-| 5-11 min | Dodaj sekcję i podsekcję, 2 pogrubienia, kursywę, listę numerowaną i punktowaną. Zapisz \$a\_i\>a\_\{i+1\}\$. |
-| 11-16 min | Dodaj numerowane C(n)=n(n-1)/2, sumę i pochodną. Odwołaj się do numeru równania. |
-| 16-24 min | Zrób tabelę 5-kolumnową z podpisem i odwołaniem. Wstaw PNG na 80% szerokości. Dodaj listing z pliku. |
-| 24-32 min | Narysuj w TikZ Start → operacja → decyzja → Koniec. Dodaj podpisy Tak/Nie i prawidłową pętlę. |
-| 32-41 min | Wykres funkcji lub CSV: osie, jednostki, 2 serie, legenda i podpis. Sprawdź nagłówki i separator. |
-| 41-45 min | Ponowna kompilacja, kontrola odwołań i marginesów. Zapisz projekt oraz PDF. |
-
-### Sprawdź, czy potrafisz zmienić przykład
-
-• Zmień funkcję i zakres osi bez zmiany podpisów na błędne.
-• Wybierz inną kolumnę CSV i dostosuj ylabel.
-• Dodaj wiersz i kolumnę tabeli bez błędu liczby &.
-• Zmień kształt węzła TikZ i poprowadź dodatkową strzałkę.
-• Wczytaj tylko fragment kodu i zmień język listingu.
-
-### Lista przed oddaniem
-
-PDF powstał po ostatnich zmianach; brak ?? i brakujących cytowań. Wszystkie wymagane obiekty mają podpis, unikalną etykietę i odwołanie. Rysunki i tabele mieszczą się na stronie. Dane dydaktyczne nie są opisane jako rzeczywiste pomiary. Do projektu dołączono użyte CSV, PNG i pliki kodu.
-
-### Jeśli masz mało czasu na naukę
-
-Najpierw części o uruchomieniu, tekście, wzorach, tabelach, rysunkach, listingach, TikZ i PGFPlots: uruchomienie, mapa plików, wzory, tabela/rysunek/listing, TikZ i CSV. Ćwicz pisanie oraz modyfikowanie kodu. Sama umiejętność rozpoznania przykładu w PDF nie wystarczy do wykonania zadania.
-
 <a id="temat-20"></a>
 
-## 20. Dodatki i źródła zakresu
+## 17. Własne polecenia i Beamer
 
 ### Własna komenda: mniej powtarzania
 
@@ -906,13 +799,3 @@ Koszt wynosi \zlozonosc{n^2}.
 ```
 
 Ten przykład uruchamia się jako osobny projekt, nie w rozdziale szablonu report. Przy kodzie dosłownym na slajdzie używa się frame z opcją \[fragile\].
-
-### Inne rzeczy obecne w skryptach wykładowych
-
-Skrypty obejmują też wykresy słupkowe, grupy wykresów (biblioteka groupplots), PythonTeX i formularze PDF. PythonTeX wykonuje kod w dodatkowym etapie; zwykły listings tylko go pokazuje. Te dodatki nie występują w zadaniach praktycznych przesłanych instrukcji 2-7, dlatego główny trening skupia się na treści, tabelach, rysunkach, listingach, TikZ i PGFPlots.
-
-### Materiały wykorzystane do dopasowania poradnika
-
-SZABLON-Projektu-main (4).zip: main.tex, config/metadata.tex, config/project-style.sty, chapters/\* oraz literatura.bib. Laboratorium\_2\_instrukcja (1).pdf; Laboratorium\_3\_instrukcja (2).pdf; Laboratorium\_4\_instrukcja (3).pdf; Laboratorium\_5\_instrukcja\_uzupelniona.pdf; Laboratorium\_6\_instrukcja (1).pdf; Laboratorium\_7\_instrukcja (1).pdf. Ten ostatni ma wewnątrz nagłówek „Laboratorium 6” i powtarza zakres PGFPlots.
-
-Materiały uzupełniające: Wyk02.pdf, po\_weail\_pl\_LATEX.pdf, Wyklad\_i\_skrypty.zip. Przykłady danych sprawdzono z CSV dane\_porownawcze (4).csv i dane\_czasow (2).csv; załączony PNG służy jako przykład importu grafiki. Nazwy kopii plików w poradniku uproszczono celowo.
