@@ -4,6 +4,38 @@ TeXstudio + MiKTeX · LuaLaTeX
 
 Praktyczne polecenia: zastosowanie, miejsce użycia i kod dla szablonu SZABLON-Projektu.
 
+## Szybki indeks: chcę zrobić → polecenie
+
+| Chcę… | Polecenie / opcja | Przykład |
+| --- | --- | --- |
+| Zmienić tytuł i autora | istniejące definicje w metadata.tex | [1](#temat-2) |
+| Dodać sekcję / podsekcję | `\section{...}`, `\subsection{...}` | [3](#temat-4) |
+| Pogrubić / pochylić tekst | `\textbf{...}`, `\textit{...}` | [3](#temat-4) |
+| Listę punktowaną / numerowaną | `itemize`, `enumerate`, `\item` | [4](#temat-5) |
+| Wzór w zdaniu / z numerem | `$...# LaTeX — polecenia i przykłady
+
+TeXstudio + MiKTeX · LuaLaTeX
+
+Praktyczne polecenia: zastosowanie, miejsce użycia i kod dla szablonu SZABLON-Projektu.
+
+, `equation` | [5](#temat-6) |
+| Ułamek, sumę, pochodną, całkę | `\frac`, `\sum`, `f'(x)`, `\int` | [6](#temat-7) |
+| Tabelę z podpisem | `table`, `tabular`, `\caption` | [7](#temat-8) |
+| Scalić komórki tabeli | `\multicolumn`, `\multirow`, `\cline` | [8](#temat-9) |
+| Wstawić obraz | `figure`, `\includegraphics` | [9](#temat-10) |
+| Podpis i automatyczny numer w tekście | `\caption`, `\label`, `\ref` | [9](#temat-10) |
+| Kod wpisany / kod z pliku | `lstlisting`, `\lstinputlisting` | [10](#temat-11) |
+| Język C i numery wierszy | `language=C,numbers=left` | [10](#temat-11) |
+| Schemat blokowy | `tikzpicture`, `\node`, `\draw` | [11–12](#temat-12) |
+| Wykres funkcji | `axis`, `\addplot {wzór};` | [13](#temat-14) |
+| **Wykres z tabeli danych / CSV** | `\addplot table[col sep=comma,x=...,y=...]{plik.csv};` | [14](#temat-15) |
+| Punkty, logarytmiczną oś, inną legendę | `only marks`, `ymode=log`, `legend entries` | [15](#temat-16) |
+| Zacytować stronę lub publikację | `@online`, `@manual`, `@article`, `\cite` | [16](#temat-17) |
+| Spis rysunków / tabel | `\listoffigures`, `\listoftables` | [1](#temat-2) |
+| Wczytać fragment / rozdział | `\input`, `\include` | [16](#temat-17) |
+
+Przykłady dotyczą laboratoriów 2–7; nie stanowią potwierdzenia dokładnego zakresu kolokwium. Polecenia kopiuj z bloków kodu lub pól oznaczonych jako kod. Wyszukiwanie na stronie: Ctrl+F.
+
 ## Spis treści
 
 - [1. Gdzie zmieniać szablon](#temat-2)
@@ -22,7 +54,7 @@ Praktyczne polecenia: zastosowanie, miejsce użycia i kod dla szablonu SZABLON-P
 - [14. PGFPlots: dwie serie z CSV](#temat-15)
 - [15. Wykresy: szybkie modyfikacje](#temat-16)
 - [16. Bibliografia i składanie plików](#temat-17)
-- [17. Własne polecenia i Beamer](#temat-20)
+- [17. Dodatkowe: własne polecenia i Beamer](#temat-20)
 
 <a id="temat-2"></a>
 
@@ -64,6 +96,19 @@ Numer albumu jest przykładowy. W projectauthors znak & rozdziela kolumny, a \\\
 ```
 
 main.tex już generuje odpowiednie wykazy. Obiekty muszą mieć podpisy, a po zmianach trzeba ponowić kompilację.
+
+
+### Polecenia spisów: gdy szablon jeszcze ich nie generuje
+
+Wstaw w odpowiednim miejscu main.tex, po rozpoczęciu dokumentu:
+
+```latex
+\listoffigures % spis rysunków
+\listoftables  % spis tabel
+\lstlistoflistings % spis listingów (pakiet listings)
+```
+
+W używanym szablonie najpierw korzystaj z przełączników powyżej. Nie dodawaj tych poleceń drugi raz, jeżeli spisy są już generowane. Wpisy powstają z podpisów obiektów. Po zmianie podpisu skompiluj dokument ponownie, w razie potrzeby dwukrotnie, i sprawdź nazwę oraz numer strony w spisie.
 
 <a id="temat-3"></a>
 
@@ -469,6 +514,8 @@ Fragment pokazano w listingu~\ref{lst:zamiana}.
 
 \lstinputlisting[
   style=project-c,
+  language=C,
+  numbers=left,
   caption={Wyszukiwanie maksimum},
   label={lst:max},
   firstline=1,lastline=12
@@ -743,6 +790,57 @@ Przykładowy wpis pokazuje składnię, nie jest rzeczywistą publikacją. Wstawi
 
 main.tex już zawiera \\addbibresource\{literatura.bib\} oraz \\printprojectbibliography. Nie dodawaj równocześnie \\bibliography i \\bibliographystyle ze starego sposobu pracy. Numeracja cytowań jest automatyczna; spis bibliografii jest uporządkowany według ustawień szablonu.
 
+### Strony internetowe: dwa źródła wymagane w laboratorium
+
+Poniższe rekordy dodaj do literatura.bib, a cytowania do pliku rozdziału. Adresy pochodzą z instrukcji; przed wykorzystaniem otwórz źródła i sprawdź aktualny tytuł oraz dane. Datę urldate ustaw na dzień, w którym faktycznie korzystasz ze strony. Nie dopisuj nieznanych dat publikacji ani autorów.
+
+```bibtex
+@online{gccOnline,
+  title   = {GCC online documentation},
+  url     = {https://gcc.gnu.org/onlinedocs/},
+  urldate = {2026-11-23}
+}
+
+@online{latexDocs,
+  title   = {LaTeX Documentation},
+  url     = {https://www.latex-project.org/help/documentation/},
+  urldate = {2026-11-23}
+}
+```
+
+```latex
+Dokumentację kompilatora opisano w źródle~\cite{gccOnline}.
+Dokumentację LaTeX podano w źródle~\cite{latexDocs}.
+% Kilka źródeł w jednym cytowaniu:
+\cite{gccOnline,latexDocs}
+```
+
+### Który typ rekordu wybrać?
+
+| Typ / pole | Zastosowanie |
+| --- | --- |
+| `@online` | Strona internetowa; podaj title, url, urldate. |
+| `@manual` | Podręcznik techniczny lub dokumentacja; dodaj dostępne author/organization, title, date, url, urldate. |
+| `@article` | Artykuł naukowy; podaj author, title, journaltitle, date/year oraz dostępne volume, number, pages, doi. |
+| `@book` | Książka; podaj author, title, date/year, publisher. |
+| `urldate` | Data dostępu w formacie RRRR-MM-DD; nie jest datą publikacji. |
+| `author` | Kolejnych autorów oddzielaj słowem and. |
+
+Dla dokumentacji konkretnego wydania wybierz @manual i przepisz tytuł, wersję oraz pozostałe dostępne dane z tego wydania. W zadaniu dodatkowym znajdź publikację w Google Scholar, pobierz rekord BibTeX i sprawdź go w oryginalnej publikacji. Cytuj publikację, a nie wyszukiwarkę.
+
+Szkielet artykułu poniżej służy wyłącznie do uzupełnienia prawdziwymi danymi; nie cytuj go jako istniejącego źródła:
+
+```bibtex
+@article{kluczArtykulu,
+  author       = {Nazwisko, Imie},
+  title        = {Tytul artykulu},
+  journaltitle = {Tytul czasopisma},
+  year         = {2026}
+}
+```
+
+Kontrola: przynajmniej dwa faktycznie wykorzystane źródła, zgodne klucze w .bib i `\cite`, poprawne cytowania w PDF i automatyczny wykaz literatury według konfiguracji szablonu. Nie formatuj ręcznie numerów ani bibliografii.
+
 ### Kompilacja z bibliografią
 
 ```text
@@ -770,7 +868,9 @@ include rozpoczyna nową stronę i służy zwykle całym rozdziałom. input wsta
 
 <a id="temat-20"></a>
 
-## 17. Własne polecenia i Beamer
+## 17. Dodatkowe: własne polecenia i Beamer
+
+Ta część wykracza poza zadania z przesłanych instrukcji laboratoriów 2–7.
 
 ### Własna komenda: mniej powtarzania
 
